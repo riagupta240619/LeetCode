@@ -1,32 +1,29 @@
 class Solution {
-    private void permute(List<Integer> num, List<Integer> ans, List<List<Integer>> res) {
-        // Base case
-        if (num.size() == 0) {
-            res.add(new ArrayList<>(ans)); 
+    public void permutation(List<List<Integer>> res, List<Integer> ans, List<Integer> arr){
+        if(arr.size() == 0){
+            res.add(new ArrayList<>(ans));
             return;
         }
-        // Loop through remaining numbers
-        for (int i = 0; i < num.size(); i++) {
-            int current = num.get(i);
-            // Create remaining list
-            List<Integer> rest = new ArrayList<>();
-            rest.addAll(num.subList(0, i));
-            rest.addAll(num.subList(i + 1, num.size()));
-            // Choose
-            ans.add(current);
-            // Recurse
-            permute(rest, ans, res);
-            // Backtrack
+        for(int i = 0;i<arr.size();i++){
+            int val = arr.get(i);
+            //choose
+            ans.add(val);
+            arr.remove(i);
+            //explore
+            permutation(res,ans, arr);
+            //backtrack
+            arr.add(i, val);
             ans.remove(ans.size() - 1);
         }
     }
     public List<List<Integer>> permute(int[] nums) {
-        List<Integer> num = new ArrayList<>();
-        for (int n : nums) {
-            num.add(n);
+        List<List<Integer>> l = new ArrayList<>();
+        List<Integer> ans = new ArrayList<>();
+        List<Integer> arr = new ArrayList<>();
+        for(int i = 0;i<nums.length;i++){
+            arr.add(nums[i]);
         }
-        List<List<Integer>> res = new ArrayList<>();
-        permute(num, new ArrayList<>(), res);
-        return res;
+        permutation(l, ans, arr);
+        return l;
     }
 }
