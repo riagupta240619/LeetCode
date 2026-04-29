@@ -4,10 +4,14 @@ class Solution {
         for(int i = 0;i<nums.length;i++){
             map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
         }
-        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+        int ans = 0;
         for(int i : nums){
-            if(map.get(i) > nums.length/2) return i;
+            if(map.get(i) > max){
+                max = map.get(i);
+                ans = i;
+            }
         }
-        return -1;
+        return ans;
     }
 }
