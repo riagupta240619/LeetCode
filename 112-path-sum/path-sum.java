@@ -14,17 +14,20 @@
  * }
  */
 class Solution {
-    public boolean paths(TreeNode root, int sum,int target){
-        if(root == null) return false;
-        if((root.left == null)&&(root.right == null)){
-            sum+=root.val;
-            if(target == sum) return true;
+    public void paths(TreeNode root, List<Integer> l, int sum){
+        if(root == null) return ;
+        if(root.left == null && root.right == null){
+            sum += root.val;
+            l.add(sum);
+            return;
         }
-        if(paths(root.left, sum + root.val,target)) return true;
-        if(paths(root.right,sum + root.val,target)) return true;
-        return false;
+        paths(root.left, l, sum + root.val);
+        paths(root.right, l, sum + root.val);
     }
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        return paths(root, 0, targetSum);
+        List<Integer> l = new ArrayList<>();
+        paths(root, l, 0);
+        if(l.contains(targetSum)) return true;
+        return false;
     }
 }
